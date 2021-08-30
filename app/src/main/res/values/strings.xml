@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">reduks</string>
+    <string name="counter_description">You have clicked the button this many times:</string>
+</resources>
