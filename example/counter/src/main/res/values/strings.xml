@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Counter</string>
+    <string name="counter_description">You have clicked the button this many times:</string>
+    <string name="reset">Reset</string>
+</resources>
