@@ -7,5 +7,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "reduks"
-include ':app'
 include ':reduks'
+include ':example:counter'
+include ':example:todo'
