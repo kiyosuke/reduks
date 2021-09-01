@@ -1,6 +1,6 @@
 package com.kiyosuke.todo
 
-import com.kiyosuke.reduks.reducer
+import com.github.kiyosuke.reduks.reducer
 import com.kiyosuke.todo.model.Todo
 
 val todoReducer = reducer<TodoState, TodoAction> { action, currentState ->

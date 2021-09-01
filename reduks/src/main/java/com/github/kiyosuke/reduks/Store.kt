@@ -1,4 +1,4 @@
-package com.kiyosuke.reduks
+package com.github.kiyosuke.reduks
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*

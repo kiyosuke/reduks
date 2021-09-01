@@ -2,9 +2,9 @@ package com.kiyosuke.todo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kiyosuke.reduks.Middleware
-import com.kiyosuke.reduks.Store
-import com.kiyosuke.reduks.middlewares.createMiddleware
+import com.github.kiyosuke.reduks.Middleware
+import com.github.kiyosuke.reduks.Store
+import com.github.kiyosuke.reduks.middlewares.createMiddleware
 import com.kiyosuke.todo.model.Todo
 
 typealias TodoStore = Store<TodoState, TodoAction>

@@ -1,8 +1,8 @@
-package com.kiyosuke.reduks.middlewares
+package com.github.kiyosuke.reduks.middlewares
 
-import com.kiyosuke.reduks.Dispatcher
-import com.kiyosuke.reduks.Middleware
-import com.kiyosuke.reduks.Store
+import com.github.kiyosuke.reduks.Dispatcher
+import com.github.kiyosuke.reduks.Middleware
+import com.github.kiyosuke.reduks.Store
 
 private fun <S, A> middleware(block: suspend (store: Store<S, A>, action: A, next: Dispatcher<A>) -> Unit): Middleware<S, A> {
     return object : Middleware<S, A> {

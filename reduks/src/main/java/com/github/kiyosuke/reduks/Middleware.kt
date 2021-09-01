@@ -1,4 +1,4 @@
-package com.kiyosuke.reduks
+package com.github.kiyosuke.reduks
 
 interface Middleware<S, A> {
 

@@ -2,7 +2,7 @@ package com.kiyosuke.counter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kiyosuke.reduks.Store
+import com.github.kiyosuke.reduks.Store
 
 private const val TAG = "CounterViewModel"
 

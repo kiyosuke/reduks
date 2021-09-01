@@ -1,7 +1,6 @@
 package com.kiyosuke.counter
 
-import com.kiyosuke.reduks.Reducer
-import com.kiyosuke.reduks.reducer
+import com.github.kiyosuke.reduks.Reducer
 
 class CounterReducer : Reducer<CounterState, CounterAction> {
     override fun reduce(action: CounterAction, currentState: CounterState): CounterState {
