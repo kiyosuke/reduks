@@ -12,24 +12,22 @@ data class CounterState(val count: Int = 0)
 
 // Create actions
 // It is recommended to define it with sealed class or sealed interface
-sealed class CounterAction {
+sealed class CounterAction : Action {
     object Increment : CounterAction()
     object Decrement : CounterAction()
 }
 
 // Create a reducer
 // A Reducer is pure function
-class CounterReducer : Reducer<CounterState, CounterAction> {
-    override fun reduce(action: CounterAction, currentState: CounterState): CounterState {
-        return when (action) {
-            CounterAction.Increment -> currentState.copy(count = currentState.count + 1)
-            CounterAction.Decrement -> currentState.copy(count = currentState.count - 1)
-        }
+val counterReducer = typedReducer<CounterState, CounterAction> {
+    when (action) {
+        CounterAction.Increment -> currentState.copy(count = currentState.count + 1)
+        CounterAction.Decrement -> currentState.copy(count = currentState.count - 1)
     }
 }
 
 private const val TAG = "CounterViewModel"
-private val logMiddleware = middleware<CounterState, CounterAction> { store, action, next ->
+private val logMiddleware = Middleware<CounterState> { store, action, next ->
     Log.d(TAG, "action: [$action], state: ${store.state.value}")
     next(action)
 }
@@ -37,10 +35,10 @@ private val logMiddleware = middleware<CounterState, CounterAction> { store, act
 // Create a ViewModel
 class CounterViewModel : ViewModel() {
     // Define and use one Store in one ViewModel
-    private val store: Store<CounterState, CounterAction> = Store(
+    private val store: Store<CounterState> = Store(
         initialState = CounterState(),
         coroutineScope = viewModelScope,
-        reducer = CounterReducer(),
+        reducer = counterReducer,
         middlewares = listOf(
             logMiddleware,
         )
