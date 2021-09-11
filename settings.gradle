@@ -10,3 +10,4 @@ rootProject.name = "reduks"
 include ':reduks'
 include ':example:counter'
 include ':example:todo'
+include ':example:common'

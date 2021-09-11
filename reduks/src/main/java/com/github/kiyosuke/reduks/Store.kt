@@ -10,10 +10,10 @@ import kotlinx.coroutines.launch
  * Example: In Android ViewModel
  * ```kotlin
  * class SampleViewModel : ViewModel() {
- *     val store = Store<SampleState, SampleAction>(
+ *     val store = Store<SampleState>(
  *         initialState = SampleState(),
  *         coroutineScope = viewModelScope,
- *         reducer = SampleReducer()
+ *         reducer = sampleReducer
  *     )
  *
  *     val state = store.state
@@ -25,20 +25,20 @@ import kotlinx.coroutines.launch
  * @param reducer Reducer
  * @param middlewares Middlewares
  */
-class Store<S, A>(
+class Store<S>(
     initialState: S,
     private val coroutineScope: CoroutineScope,
-    reducer: Reducer<S, A>,
-    middlewares: List<Middleware<S, A>> = emptyList()
+    reducer: Reducer<S, Action>,
+    middlewares: List<Middleware<S>> = emptyList()
 ) {
     // Actions flow
-    private val actions = MutableSharedFlow<A>()
+    private val actions = MutableSharedFlow<Action>()
 
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()
 
     // Middlewareを考慮した上で最初に実行するDispatcher
-    private val entranceDispatcher: Dispatcher<A>
+    private val entranceDispatcher: Dispatcher<Action>
 
     init {
         entranceDispatcher = setupMiddlewares(middlewares)
@@ -52,11 +52,11 @@ class Store<S, A>(
     /**
      * Middlewareの実行とStore#dispatchの実行を考慮した最初に実行するDispatchオブジェクトを生成
      */
-    private fun setupMiddlewares(middlewares: List<Middleware<S, A>>): Dispatcher<A> {
-        val dispatchers = mutableListOf<Dispatcher<A>>(::dispatchTo)
+    private fun setupMiddlewares(middlewares: List<Middleware<S>>): Dispatcher<Action> {
+        val dispatchers = mutableListOf<Dispatcher<Action>>(::dispatchTo)
         for (middleware in middlewares) {
             val next = dispatchers.last()
-            val dispatcher: Dispatcher<A> = { action ->
+            val dispatcher: Dispatcher<Action> = { action ->
                 middleware.apply(this, action, next)
             }
             dispatchers.add(dispatcher)
@@ -64,11 +64,11 @@ class Store<S, A>(
         return dispatchers.reversed().first()
     }
 
-    private suspend fun dispatchTo(action: A) {
+    private suspend fun dispatchTo(action: Action) {
         actions.emit(action)
     }
 
-    fun dispatch(action: A) {
+    fun dispatch(action: Action) {
         coroutineScope.launch {
             entranceDispatcher(action)
         }

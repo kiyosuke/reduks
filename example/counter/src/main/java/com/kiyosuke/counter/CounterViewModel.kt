@@ -3,17 +3,16 @@ package com.kiyosuke.counter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.kiyosuke.reduks.Store
-
-private const val TAG = "CounterViewModel"
+import com.kiyosuke.common.logger
 
 class CounterViewModel : ViewModel() {
 
-    private val store: Store<CounterState, CounterAction> = Store(
+    private val store: Store<CounterState> = Store(
         initialState = CounterState(),
         coroutineScope = viewModelScope,
-        reducer = CounterReducer(),
+        reducer = counterReducer,
         middlewares = listOf(
-            logger(TAG),
+            logger(),
         )
     )
 

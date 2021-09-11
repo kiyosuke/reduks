@@ -1,6 +1,8 @@
 package com.kiyosuke.counter
 
-sealed class CounterAction {
+import com.github.kiyosuke.reduks.Action
+
+sealed class CounterAction : Action {
 
     object Increment : CounterAction() {
         override fun toString(): String {

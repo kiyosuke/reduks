@@ -1,6 +1,6 @@
 package com.github.kiyosuke.reduks
 
-fun <S, A> combineReducers(vararg reducers: Reducer<S, A>): Reducer<S, A> {
+fun <S> combineReducers(vararg reducers: Reducer<S, Action>): Reducer<S, Action> {
     return reducer { action, currentState ->
         var state = currentState
         for (reducer in reducers) {

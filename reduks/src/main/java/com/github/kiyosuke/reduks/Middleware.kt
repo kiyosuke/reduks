@@ -1,13 +1,13 @@
 package com.github.kiyosuke.reduks
 
-interface Middleware<S, A> {
+interface Middleware<S> {
 
-    suspend fun apply(store: Store<S, A>, action: A, next: Dispatcher<A>)
+    suspend fun apply(store: Store<S>, action: Action, next: Dispatcher<Action>)
 
     companion object {
-        inline operator fun <S, A> invoke(crossinline block: suspend (store: Store<S, A>, action: A, next: Dispatcher<A>) -> Unit): Middleware<S, A> {
-            return object : Middleware<S, A> {
-                override suspend fun apply(store: Store<S, A>, action: A, next: Dispatcher<A>) {
+        inline operator fun <S> invoke(crossinline block: suspend (store: Store<S>, action: Action, next: Dispatcher<Action>) -> Unit): Middleware<S> {
+            return object : Middleware<S> {
+                override suspend fun apply(store: Store<S>, action: Action, next: Dispatcher<Action>) {
                     block(store, action, next)
                 }
             }

@@ -1,9 +1,9 @@
 package com.kiyosuke.todo
 
-import com.github.kiyosuke.reduks.reducer
+import com.github.kiyosuke.reduks.typedReducer
 import com.kiyosuke.todo.model.Todo
 
-val todoReducer = reducer<TodoState, TodoAction> { action, currentState ->
+val todoReducer = typedReducer<TodoState, TodoAction> { action, currentState ->
     when (action) {
         is TodoAction.AddTodo -> {
             val todo = Todo(action.id, action.text)

@@ -5,11 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.github.kiyosuke.reduks.Middleware
 import com.github.kiyosuke.reduks.Store
 import com.github.kiyosuke.reduks.middlewares.createMiddleware
+import com.kiyosuke.common.logger
 import com.kiyosuke.todo.model.Todo
 
-typealias TodoStore = Store<TodoState, TodoAction>
+typealias TodoStore = Store<TodoState>
 
-private val inputValidate: Middleware<TodoState, TodoAction> = createMiddleware { _, action, next ->
+private val inputValidate: Middleware<TodoState> = createMiddleware<TodoState, TodoAction> { _, action, next ->
     if (action is TodoAction.AddTodo) {
         if (action.text.isNotEmpty()) {
             next(action)
@@ -26,6 +27,7 @@ class TodoViewModel : ViewModel() {
         reducer = todoReducer,
         middlewares = listOf(
             inputValidate,
+            logger()
         )
     )
 
